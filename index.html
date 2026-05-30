@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Friends | M3lo-Bot</title>
+    <title>Melo | Home</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -12,10 +12,6 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --glow: rgba(56, 189, 248, 0.15);
-            --online: #23a55a;
-            --idle: #f0b232;
-            --dnd: #f23f43;
-            --offline: #63707e;
         }
 
         * {
@@ -29,22 +25,38 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 3rem 2rem;
+            padding: 2rem;
             overflow-x: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--accent-color);
+            filter: blur(200px);
+            top: -150px;
+            left: -100px;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        body::after {
             content: '';
             position: absolute;
             width: 400px;
             height: 400px;
             background: var(--accent-color);
             filter: blur(180px);
-            top: -100px;
+            bottom: -100px;
             right: -100px;
             z-index: -1;
-            opacity: 0.2;
+            opacity: 0.1;
         }
 
         .page-wrapper {
@@ -53,16 +65,49 @@
             width: 100%;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 3.5rem;
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            margin-bottom: 4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        h1 {
-            font-size: 2.5rem;
+        .nav-logo {
+            font-size: 1.25rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            text-decoration: none;
             letter-spacing: -0.5px;
+        }
+
+        .nav-logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding: 2rem 0;
         }
 
         .subtitle {
@@ -74,167 +119,189 @@
             margin-bottom: 1rem;
         }
 
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.25rem;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        h1 span {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .description {
             color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
         }
 
-        .friends-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #0f172a;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            flex-grow: 1;
+        }
+
+        .owner-section {
+            margin-bottom: 4rem;
+        }
+
+        .owner-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 41, 59, 0.7) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            display: flex;
+            align-items: center;
             gap: 2rem;
-            margin-bottom: 3.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
         }
 
-        .friend-card {
+        .owner-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+            flex-shrink: 0;
+        }
+
+        .owner-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--text-main);
+        }
+
+        .owner-tag {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .owner-bio {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .showcase-card {
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
-        .friend-card:hover {
+        .showcase-card:hover {
             transform: translateY(-5px);
             border-color: rgba(56, 189, 248, 0.3);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 40px var(--glow);
         }
 
-        .avatar-wrapper {
-            position: relative;
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 1.25rem;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: border-color 0.3s;
-        }
-
-        .friend-card:hover .avatar {
-            border-color: var(--accent-color);
-        }
-
-        .status-dot {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 24px;
-            height: 24px;
-            border: 4px solid var(--card-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.5s ease, background-color 0.3s ease;
-        }
-
-        .status-dot.active {
-            opacity: 1;
-        }
-
-        .status-online {
-            background-color: var(--online);
-        }
-
-        .status-idle {
-            background-color: var(--idle);
-            -webkit-mask-image: radial-gradient(circle 5px at 14px 6px, transparent 100%, #000 100%);
-            mask-image: radial-gradient(circle 5px at 14px 6px, transparent 100%, #000 100%);
-        }
-
-        .status-dnd {
-            background-color: var(--dnd);
-        }
-
-        .status-dnd::before {
-            content: '';
-            width: 10px;
-            height: 3px;
-            background-color: var(--card-bg);
-            border-radius: 1px;
-            position: absolute;
-        }
-
-        .status-offline {
-            background-color: var(--offline);
-        }
-
-        .friend-name {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .friend-role {
-            color: var(--accent-color);
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .friend-bio {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .btn-profile {
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
             display: inline-block;
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 0.88rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
         }
 
-        .btn-profile:hover {
-            background: var(--accent-color);
-            color: #0f172a;
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
-            transform: translateY(-1px);
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .footer-nav {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .back-home {
+        .card-text {
             color: var(--text-muted);
             font-size: 0.95rem;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            line-height: 1.6;
         }
 
-        .back-home:hover {
-            color: var(--accent-color);
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            nav { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .nav-links { gap: 1.5rem; }
+            .owner-card { flex-direction: column; text-align: center; padding: 2rem; }
         }
     </style>
 </head>
@@ -242,86 +309,70 @@
 
     <div class="page-wrapper">
         
-        <header>
-            <div class="subtitle">The Socialism</div>
-            <h1>Z3phyr's Friends</h1>
-            <p class="description">Meet the friends of Z3phyr</p>
+        <nav>
+            <a href="#" class="nav-logo">M3lo-Bot<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="friends/index.html">Friends</a></li>
+                <li><a href="https://discord.gg/QNGWvH84hx" target="_blank">Discord</a></li>
+            </ul>
+        </nav>
+
+        <header class="hero">
+            <div class="subtitle">Welcome to the Project</div>
+            <h1>The Hub for <span>Melo</span></h1>
+            <p class="description">
+                Explore advanced feature sets, community software solutions, and comprehensive infrastructure maps. Driven by design innovation, engineered alongside an exceptional community framework.
+            </p>
+            <div class="cta-group">
+                <a href="https://discord.gg/QNGWvH84hx" target="_blank" class="btn btn-primary">Join Discord Server</a>
+                <a href="friends/index.html" class="btn btn-secondary">Meet my friedns!</a>
+            </div>
         </header>
 
-        <main class="friends-grid">
-
-            <div class="friend-card" data-discord-id="1033745912071192688">
-                <div>
-                    <div class="avatar-wrapper">
-                        <img src="https://cdn.discordapp.com/avatars/1033745912071192688/874fe80ecfcf4e386a0c9f5264706eee.webp?size=1024" alt="Stilleswasser93's Avatar" class="avatar">
-                        <div class="status-dot"></div>
+        <main>
+            <section class="owner-section">
+                <h2 class="section-title">Project Lead</h2>
+                <div class="owner-card">
+                    <div class="owner-avatar">👑</div>
+                    <div class="owner-info">
+                        <h3>Z3phyr</h3>
+                        <span class="owner-tag">Founder & Lead Architect</span>
+                        <p class="owner-bio">
+                            Hey-ho! Thanks for being on this site, this means alot to me! This is pretty short, but well. Bye! 💙
+                        </p>
                     </div>
-                    <div class="friend-name">Stilleswasser93</div>
-                    <div class="friend-role">Supporter</div>
-                    <p class="friend-bio">Helped me not to give up the Project and more. Thank you 💙.</p>
                 </div>
-                <a href="#" target="_blank" class="btn-profile">View Profile</a>
-            </div>
+            </section>
 
-            <div class="friend-card" data-discord-id="1284471137488732313">
-                <div>
-                    <div class="avatar-wrapper">
-                        <img src="https://cdn.discordapp.com/avatars/1284471137488732313/03be9864561a0476e87acf2801facdc8.webp?size=1024" alt="moritz0742's Avatar" class="avatar">
-                        <div class="status-dot"></div>
-                    </div>
-                    <div class="friend-name">Moritz0742</div>
-                    <div class="friend-role">Supporter / Tester</div>
-                    <p class="friend-bio">Supports me and Tests features. Thank you 💙.</p>
+            <h2 class="section-title">What's Going On</h2>
+            
+            <div class="grid-layout">
+                <div class="showcase-card">
+                    <div class="card-icon">🤖</div>
+                    <h3 class="card-title">Melo-Bot Ecosystem</h3>
+                    <p class="card-text">A high-performance, asynchronous automation framework engineered to expand platform capabilities, stream massive operational loads, and enforce strict, secure automated server moderation algorithms.</p>
                 </div>
-                <a href="#" target="_blank" class="btn-profile">View Profile</a>
-            </div>
 
-            <div class="friend-card" data-discord-id="000000000000000000">
-                <div>
-                    <div class="avatar-wrapper">
-                        <img src="https://ui-avatars.com/api/?name=non+exist&background=1e293b&color=38bdf8&bold=true" alt="non-exist's Avatar" class="avatar">
-                        <div class="status-dot"></div>
-                    </div>
-                    <div class="friend-name">.non-exist.</div>
-                    <div class="friend-role">Supporter</div>
-                    <p class="friend-bio">He's supporting the entire Project. Thank you 💙.</p>
+                <div class="showcase-card">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">Active Development</h3>
+                    <p class="card-text">Every Update - New architectury. Much work, good outcome.</p>
                 </div>
-                <a href="#" target="_blank" class="btn-profile">View Website</a>
-            </div>
 
+                <div class="showcase-card">
+                    <div class="card-icon">👥</div>
+                    <h3 class="card-title">Solid Support</h3>
+                    <p class="card-text">We've got many Supporters. These are special persons. Please check them out, it's a worthy experience!</p>
+                </div>
+            </div>
         </main>
 
-        <footer class="footer-nav">
-            <a href="../index.html" class="back-home">← Back to Z3phyrs Profile</a>
+        <footer>
+            <p>&copy; 2026 Melo-Bot Project. Created by Z3phyr.</p>
         </footer>
 
     </div>
 
-    <script>
-        document.querySelectorAll('.friend-card').forEach(card => {
-            const userId = card.getAttribute('data-discord-id');
-            if (!userId || userId === "000000000000000000") {
-                const dot = card.querySelector('.status-dot');
-                dot.classList.add('status-offline', 'active');
-                return;
-            }
-
-            fetch(`https://api.lanyard.rest/v1/users/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.data) {
-                        const status = data.data.discord_status;
-                        const dot = card.querySelector('.status-dot');
-                        
-                        dot.className = 'status-dot'; 
-                        dot.classList.add(`status-${status}`, 'active');
-                    }
-                })
-                .catch(() => {
-                    const dot = card.querySelector('.status-dot');
-                    dot.classList.add('status-offline', 'active');
-                });
-        });
-    </script>
 </body>
 </html>
